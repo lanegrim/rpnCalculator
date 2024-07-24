@@ -8,3 +8,7 @@ The main design consideration in the development of this tool to consistently pr
 1. Beginning with a brief instructional prompt how to use the calculator, including its exit and clear commands
 2. Providing users with the current stack after every input
 3. Providing users with clear error messages and clean recoveries after invalid inputs
+
+## Further Questions and Considerations
+
+- Investigate best practices around testing typescript files. Should the tests check the typescript files or the transpiled javascript files?
