@@ -1,0 +1,29 @@
+{
+	"name": "rpncalculator",
+	"version": "1.0.0",
+	"description": "A typescript-based CLI reverse polish notation calculator",
+	"main": "/dist/index.js",
+	"scripts": {
+		"test": "jest",
+		"test-watch": "jest --watch",
+		"dev": "tsc",
+		"dev-watch": "tsc --watch"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/lanegrim/rpnCalculator.git"
+	},
+	"author": "Lane Grimaud",
+	"license": "ISC",
+	"bugs": {
+		"url": "https://github.com/lanegrim/rpnCalculator/issues"
+	},
+	"homepage": "https://github.com/lanegrim/rpnCalculator#readme",
+	"dependencies": {
+		"typescript": "^5.5.4"
+	},
+	"devDependencies": {
+		"jest": "^29.7.0",
+		"ts-jest": "^29.2.3"
+	}
+}
