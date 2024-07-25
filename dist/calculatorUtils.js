@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.handleOperator = exports.handleOperand = exports.stringifyStack = exports.roundToThreeDecimalPlaces = exports.standardizeString = exports.isOperatorOrOperand = exports.splitOnWhiteSpace = exports.isNullInput = exports.operators = void 0;
+exports.handleOperator = exports.handleOperand = exports.stringifyStack = exports.roundToThreeDecimalPlaces = exports.standardizeString = exports.formatInputExpression = exports.isNullInput = exports.operators = void 0;
 // all valid operators for four-function calculator
 exports.operators = {
     '+': (a, b) => a + b,
@@ -23,19 +23,36 @@ exports.isNullInput = isNullInput;
  * @param expression - a string comprised of tokens and whitespace
  * @returns array of token strings
  */
-const splitOnWhiteSpace = (expression) => {
-    return expression.split(/\s+/);
+// export const splitOnWhiteSpace = (expression: string): string[] => {
+// 	return expression.split(/\s+/)
+// }
+const formatInputExpression = (inputExpression) => {
+    const splitInput = inputExpression.split('');
+    let formattedInput = [];
+    let tokenPlaceholder = '';
+    for (let i = 0; i < splitInput.length; i++) {
+        if (!isNaN(parseFloat(splitInput[i])) || splitInput[i] === '.') {
+            tokenPlaceholder += splitInput[i];
+            if (isNaN(parseFloat(splitInput[i + 1])) && splitInput[i + 1] !== '.') {
+                formattedInput.push(tokenPlaceholder);
+                tokenPlaceholder = '';
+            }
+        }
+        if (splitInput[i] in exports.operators) {
+            formattedInput.push(splitInput[i]);
+        }
+    }
+    return formattedInput;
 };
-exports.splitOnWhiteSpace = splitOnWhiteSpace;
+exports.formatInputExpression = formatInputExpression;
 /**
  * Checks if the input string is a valid calculator operator or number
  * @param token - substring of calculator input string
  * @returns boolean denoting validity of token
  */
-const isOperatorOrOperand = (token) => {
-    return token in exports.operators || !isNaN(parseFloat(token));
-};
-exports.isOperatorOrOperand = isOperatorOrOperand;
+// export const isOperatorOrOperand = (token: string): boolean => {
+// 	return token in operators || !isNaN(parseFloat(token))
+// }
 /**
  * Lowercases and trims input string
  * @param inputString - raw string from user input

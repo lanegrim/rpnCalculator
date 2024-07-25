@@ -1,13 +1,12 @@
 import readline from 'readline'
 import {
 	operators,
-	isOperatorOrOperand,
 	standardizeString,
 	isNullInput,
-	splitOnWhiteSpace,
 	stringifyStack,
 	handleOperand,
 	handleOperator,
+	formatInputExpression,
 } from './calculatorUtils'
 
 let activeStack: number[] = []
@@ -25,7 +24,7 @@ const promptForInitialInput = (): void => {
 	console.log('Ex: "6 4 3 + -" will evaluate to "-1"')
 	console.log('Press c to clear stack')
 	console.log('Press q or ctl+c to exit')
-	rl.setPrompt('Input an expression to begin:')
+	rl.setPrompt('Input an expression:')
 	rl.prompt()
 }
 
@@ -48,14 +47,12 @@ const handleInput = (input: string): void => {
 		activeStack = []
 	}
 
-	const tokens = splitOnWhiteSpace(standardizedInput)
+	const tokens = formatInputExpression(standardizedInput)
 
 	tokens.forEach((token) => {
-		if (isOperatorOrOperand(token)) {
-			token in operators
-				? (activeStack = handleOperator(token, activeStack))
-				: (activeStack = handleOperand(token, activeStack))
-		}
+		token in operators
+			? (activeStack = handleOperator(token, activeStack))
+			: (activeStack = handleOperand(token, activeStack))
 	})
 
 	console.log(

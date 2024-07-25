@@ -16,22 +16,26 @@ export const isNullInput = (input: string): boolean => {
 	return input.length === 0
 }
 
-/**
- * Transforms an expression into an array of token
- * @param expression - a string comprised of tokens and whitespace
- * @returns array of token strings
- */
-export const splitOnWhiteSpace = (expression: string): string[] => {
-	return expression.split(/\s+/)
-}
+export const formatInputExpression = (inputExpression: string) => {
+	const splitInput = inputExpression.split('')
+	let formattedInput = []
+	let tokenPlaceholder = ''
+	for (let i = 0; i < splitInput.length; i++) {
+		if (!isNaN(parseFloat(splitInput[i])) || splitInput[i] === '.') {
+			tokenPlaceholder += splitInput[i]
 
-/**
- * Checks if the input string is a valid calculator operator or number
- * @param token - substring of calculator input string
- * @returns boolean denoting validity of token
- */
-export const isOperatorOrOperand = (token: string): boolean => {
-	return token in operators || !isNaN(parseFloat(token))
+			if (isNaN(parseFloat(splitInput[i + 1])) && splitInput[i + 1] !== '.') {
+				formattedInput.push(tokenPlaceholder)
+				tokenPlaceholder = ''
+			}
+		}
+
+		if (splitInput[i] in operators) {
+			formattedInput.push(splitInput[i])
+		}
+	}
+
+	return formattedInput
 }
 
 /**
