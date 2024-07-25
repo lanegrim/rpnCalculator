@@ -51,6 +51,7 @@ const handleInput = (input) => {
             ? (activeStack = (0, calculatorUtils_1.handleOperator)(token, activeStack, previousStack))
             : (activeStack = (0, calculatorUtils_1.handleOperand)(token, activeStack));
     });
+    console.log(`input evaluated as: "${tokens.join(' ')}"`);
     console.log(`previous stack: [${(0, calculatorUtils_1.stringifyStack)(previousStack)}]  ==> current stack: [${(0, calculatorUtils_1.stringifyStack)(activeStack)}]`);
 };
 rl.on('line', (input) => {

@@ -23,11 +23,19 @@ export const isNullInput = (input: string): boolean => {
  * @param inputExpression - string representing user input expression
  * @returns formatted array of valid tokens
  */
-export const formatInputExpression = (inputExpression: string) => {
+export const formatInputExpression = (inputExpression: string): string[] => {
 	const splitInput = inputExpression.split('')
 	let formattedInput = []
 	let tokenPlaceholder = ''
 	for (let i = 0; i < splitInput.length; i++) {
+		let tokenIsNegative = false
+		if (splitInput[i] === '-') {
+			if (!isNaN(parseFloat(splitInput[i + 1])) || splitInput[i + 1] === '.') {
+				tokenIsNegative = true
+				tokenPlaceholder += splitInput[i]
+			}
+		}
+
 		if (!isNaN(parseFloat(splitInput[i])) || splitInput[i] === '.') {
 			tokenPlaceholder += splitInput[i]
 
@@ -44,7 +52,11 @@ export const formatInputExpression = (inputExpression: string) => {
 				tokenPlaceholder = ''
 			}
 		} else if (splitInput[i] in operators) {
-			formattedInput.push(splitInput[i])
+			if (splitInput[i] !== '-') {
+				formattedInput.push(splitInput[i])
+			} else if (tokenIsNegative === false) {
+				formattedInput.push(splitInput[i])
+			}
 		} else if (splitInput[i]! in validNonOperatorStrings) {
 			console.log(
 				`Warning: "${splitInput[i]}" is not a valid operator or operand. It will be ignored.`
@@ -125,7 +137,7 @@ export const handleOperator = (
 	const currentOperands = [stack.pop()!, stack.pop()!]
 
 	const newOperand = operators[operator](currentOperands[1], currentOperands[0])
-	stack.unshift(roundToThreeDecimalPlaces(newOperand.toString()))
+	stack.push(roundToThreeDecimalPlaces(newOperand.toString()))
 
 	return stack
 }

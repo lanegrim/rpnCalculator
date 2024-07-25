@@ -29,6 +29,13 @@ const formatInputExpression = (inputExpression) => {
     let formattedInput = [];
     let tokenPlaceholder = '';
     for (let i = 0; i < splitInput.length; i++) {
+        let tokenIsNegative = false;
+        if (splitInput[i] === '-') {
+            if (!isNaN(parseFloat(splitInput[i + 1])) || splitInput[i + 1] === '.') {
+                tokenIsNegative = true;
+                tokenPlaceholder += splitInput[i];
+            }
+        }
         if (!isNaN(parseFloat(splitInput[i])) || splitInput[i] === '.') {
             tokenPlaceholder += splitInput[i];
             if (isNaN(parseFloat(splitInput[i + 1])) && splitInput[i + 1] !== '.') {
@@ -41,7 +48,12 @@ const formatInputExpression = (inputExpression) => {
             }
         }
         else if (splitInput[i] in exports.operators) {
-            formattedInput.push(splitInput[i]);
+            if (splitInput[i] !== '-') {
+                formattedInput.push(splitInput[i]);
+            }
+            else if (tokenIsNegative === false) {
+                formattedInput.push(splitInput[i]);
+            }
         }
         else if (splitInput[i] in exports.validNonOperatorStrings) {
             console.log(`Warning: "${splitInput[i]}" is not a valid operator or operand. It will be ignored.`);
@@ -109,7 +121,7 @@ const handleOperator = (operator, stack, previousStack) => {
     }
     const currentOperands = [stack.pop(), stack.pop()];
     const newOperand = exports.operators[operator](currentOperands[1], currentOperands[0]);
-    stack.unshift((0, exports.roundToThreeDecimalPlaces)(newOperand.toString()));
+    stack.push((0, exports.roundToThreeDecimalPlaces)(newOperand.toString()));
     return stack;
 };
 exports.handleOperator = handleOperator;

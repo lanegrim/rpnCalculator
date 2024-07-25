@@ -73,6 +73,7 @@ const handleInput = (input: string): void => {
 			: (activeStack = handleOperand(token, activeStack))
 	})
 
+	console.log(`input evaluated as: "${tokens.join(' ')}"`)
 	console.log(
 		`previous stack: [${stringifyStack(
 			previousStack
