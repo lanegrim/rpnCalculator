@@ -4,10 +4,11 @@ import {
 	isOperatorOrOperand,
 	truncateToThreeDecimalPlaces,
 	standardizeString,
+	isNullInput,
+	splitOnWhiteSpace,
 } from './calculatorUtils'
 
-let activeStack: []
-let lastInput: string
+let activeStack: string[] = []
 
 const rl = readline.createInterface({
 	input: process.stdin,
@@ -15,16 +16,44 @@ const rl = readline.createInterface({
 })
 
 const promptForInitialInput = (): void => {
-	rl.write('Reverse Polish Notation Calculator \n')
-	rl.write(
-		'To solve, please format expressions with operands preceding operators and single spaces between each \n'
+	console.log('Reverse Polish Notation Calculator')
+	console.log(
+		'To solve, please format expressions with operands preceding operators and single spaces between each'
 	)
-	rl.write('Ex: "6 4 3 + -" will evaluate to "-1" \n')
-	rl.write('Press q or ctl+c to exit \n')
-	rl.setPrompt('Input an expression to begin: \n')
+	console.log('Ex: "6 4 3 + -" will evaluate to "-1"')
+	console.log('Press q or ctl+c to exit')
+	rl.setPrompt('Input an expression to begin:')
 	rl.prompt()
 }
 
-const handleInput = () => {}
+const handleInput = (input: string): void => {
+	const standardizedInput = standardizeString(input)
 
-promptForInitialInput()
+	if (isNullInput(standardizedInput)) {
+		console.log(`input: [${input}] --- current stack: [${activeStack}]`)
+		return
+	}
+
+	if (standardizedInput === 'q') {
+		rl.close()
+		return
+	}
+
+	const tokens = splitOnWhiteSpace(standardizedInput)
+
+	tokens.forEach((token) => {
+		if (isOperatorOrOperand(token)) {
+			activeStack.push(token)
+		}
+	})
+
+	console.log(`input: [${input}] --- current stack: [${activeStack}]`)
+}
+
+rl.on('line', (input: string): void => {
+	handleInput(input)
+})
+
+if (require.main === module) {
+	promptForInitialInput()
+}

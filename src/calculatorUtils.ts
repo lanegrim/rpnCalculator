@@ -8,9 +8,27 @@ export const operators: { [key: string]: (a: number, b: number) => number } = {
 }
 
 /**
+ * Checks if input string is empty
+ * @param input - string of unknown length
+ * @returns boolean denoting if input is null
+ */
+export const isNullInput = (input: string): boolean => {
+	return input.length === 0
+}
+
+/**
+ * Transforms an expression into an array of token
+ * @param expression - a string comprised of tokens and whitespace
+ * @returns array of token strings
+ */
+export const splitOnWhiteSpace = (expression: string): string[] => {
+	return expression.trim().split(/\s+/)
+}
+
+/**
  * Checks if the input string is a valid calculator operator or number
  * @param token - substring of calculator input string
- * @returns boolean
+ * @returns boolean denoting validity of token
  */
 export const isOperatorOrOperand = (token: string): boolean => {
 	return token in operators || !isNaN(parseFloat(token))

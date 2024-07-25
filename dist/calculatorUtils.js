@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.truncateToThreeDecimalPlaces = exports.standardizeString = exports.isOperatorOrOperand = exports.operators = void 0;
+exports.truncateToThreeDecimalPlaces = exports.standardizeString = exports.isOperatorOrOperand = exports.splitOnWhiteSpace = exports.isNullInput = exports.operators = void 0;
 // all valid operators for four-function calculator
 exports.operators = {
     '+': (a, b) => a + b,
@@ -10,9 +10,27 @@ exports.operators = {
     '/': (a, b) => a / b,
 };
 /**
+ * Checks if input string is empty
+ * @param input - string of unknown length
+ * @returns boolean denoting if input is null
+ */
+const isNullInput = (input) => {
+    return input.length === 0;
+};
+exports.isNullInput = isNullInput;
+/**
+ * Transforms an expression into an array of token
+ * @param expression - a string comprised of tokens and whitespace
+ * @returns array of token strings
+ */
+const splitOnWhiteSpace = (expression) => {
+    return expression.trim().split(/\s+/);
+};
+exports.splitOnWhiteSpace = splitOnWhiteSpace;
+/**
  * Checks if the input string is a valid calculator operator or number
  * @param token - substring of calculator input string
- * @returns boolean
+ * @returns boolean denoting validity of token
  */
 const isOperatorOrOperand = (token) => {
     return token in exports.operators || !isNaN(parseFloat(token));
