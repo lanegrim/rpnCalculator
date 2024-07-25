@@ -2,7 +2,7 @@
 	"name": "rpncalculator",
 	"version": "1.0.0",
 	"description": "A typescript-based CLI reverse polish notation calculator",
-	"main": "/dist/index.js",
+	"main": "/app/index.js",
 	"scripts": {
 		"test": "jest",
 		"test-watch": "jest --watch",
