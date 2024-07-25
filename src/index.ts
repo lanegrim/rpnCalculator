@@ -2,14 +2,15 @@ import readline from 'readline'
 import {
 	operators,
 	isOperatorOrOperand,
-	truncateToThreeDecimalPlaces,
 	standardizeString,
 	isNullInput,
 	splitOnWhiteSpace,
 	stringifyStack,
+	handleOperand,
+	handleOperator,
 } from './calculatorUtils'
 
-let activeStack: string[] = []
+let activeStack: (string | number)[] = []
 
 const rl = readline.createInterface({
 	input: process.stdin,
@@ -51,7 +52,9 @@ const handleInput = (input: string): void => {
 
 	tokens.forEach((token) => {
 		if (isOperatorOrOperand(token)) {
-			activeStack.push(token)
+			token in operators
+				? handleOperator(token, activeStack)
+				: (activeStack = handleOperand(token, activeStack))
 		}
 	})
 

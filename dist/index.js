@@ -35,7 +35,9 @@ const handleInput = (input) => {
     const tokens = (0, calculatorUtils_1.splitOnWhiteSpace)(standardizedInput);
     tokens.forEach((token) => {
         if ((0, calculatorUtils_1.isOperatorOrOperand)(token)) {
-            activeStack.push(token);
+            token in calculatorUtils_1.operators
+                ? (0, calculatorUtils_1.handleOperator)(token, activeStack)
+                : (activeStack = (0, calculatorUtils_1.handleOperand)(token, activeStack));
         }
     });
     console.log(`input: ${input}  ==> current stack: [${(0, calculatorUtils_1.stringifyStack)(activeStack)}]`);

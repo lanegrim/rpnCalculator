@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.stringifyStack = exports.truncateToThreeDecimalPlaces = exports.standardizeString = exports.isOperatorOrOperand = exports.splitOnWhiteSpace = exports.isNullInput = exports.operators = void 0;
+exports.handleOperator = exports.handleOperand = exports.stringifyStack = exports.truncateToThreeDecimalPlaces = exports.standardizeString = exports.isOperatorOrOperand = exports.splitOnWhiteSpace = exports.isNullInput = exports.operators = void 0;
 // all valid operators for four-function calculator
 exports.operators = {
     '+': (a, b) => a + b,
@@ -51,7 +51,7 @@ exports.standardizeString = standardizeString;
  * @returns truncated float
  */
 const truncateToThreeDecimalPlaces = (input) => {
-    return parseFloat(input.toFixed(3));
+    return parseFloat(input).toFixed(3);
 };
 exports.truncateToThreeDecimalPlaces = truncateToThreeDecimalPlaces;
 /**
@@ -63,3 +63,24 @@ const stringifyStack = (stack) => {
     return stack.join(' ');
 };
 exports.stringifyStack = stringifyStack;
+/**
+ * truncates operants and adds them to the active stack
+ * @param operand - number being added to stack
+ * @param stack - active stack being evaluated
+ * @returns stack with new operand truncated and pushed on
+ */
+const handleOperand = (operand, stack) => {
+    stack.push((0, exports.truncateToThreeDecimalPlaces)(operand));
+    return stack;
+};
+exports.handleOperand = handleOperand;
+/**
+ * Applies the given operator to final two operands in the active stack. Throws error if there are insufficient operands
+ * @param operator - string representing a valid calculator operation
+ * @param stack - active stack being evaluated
+ * @returns stack with new values after operator is applied
+ */
+const handleOperator = (operator, stack) => {
+    return stack;
+};
+exports.handleOperator = handleOperator;

@@ -48,8 +48,8 @@ export const standardizeString = (inputString: string): string => {
  * @param input - float to be truncated
  * @returns truncated float
  */
-export const truncateToThreeDecimalPlaces = (input: number): number => {
-	return parseFloat(input.toFixed(3))
+export const truncateToThreeDecimalPlaces = (input: string): string => {
+	return parseFloat(input).toFixed(3)
 }
 
 /**
@@ -57,6 +57,33 @@ export const truncateToThreeDecimalPlaces = (input: number): number => {
  * @param stack - array of tokens
  * @returns string of stack tokens joined with whitespace
  */
-export const stringifyStack = (stack: string[]): string => {
+export const stringifyStack = (stack: (string | number)[]): string => {
 	return stack.join(' ')
+}
+
+/**
+ * truncates operants and adds them to the active stack
+ * @param operand - number being added to stack
+ * @param stack - active stack being evaluated
+ * @returns stack with new operand truncated and pushed on
+ */
+export const handleOperand = (
+	operand: string,
+	stack: (string | number)[]
+): (string | number)[] => {
+	stack.push(truncateToThreeDecimalPlaces(operand))
+	return stack
+}
+
+/**
+ * Applies the given operator to final two operands in the active stack. Throws error if there are insufficient operands
+ * @param operator - string representing a valid calculator operation
+ * @param stack - active stack being evaluated
+ * @returns stack with new values after operator is applied
+ */
+export const handleOperator = (
+	operator: string,
+	stack: (string | number)[]
+): (string | number)[] => {
+	return stack
 }
