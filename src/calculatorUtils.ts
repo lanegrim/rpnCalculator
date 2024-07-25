@@ -7,6 +7,8 @@ export const operators: { [key: string]: (a: number, b: number) => number } = {
 	'/': (a, b) => a / b,
 }
 
+export const validNonOperatorStrings: string[] = ['q', 'c', 'h', ' ']
+
 /**
  * Checks if input string is empty
  * @param input - string of unknown length
@@ -40,7 +42,7 @@ export const formatInputExpression = (inputExpression: string) => {
 			}
 		} else if (splitInput[i] in operators) {
 			formattedInput.push(splitInput[i])
-		} else if (splitInput[i] !== ' ') {
+		} else if (splitInput[i]! in validNonOperatorStrings) {
 			console.log(
 				`Warning: "${splitInput[i]}" is not a valid operator or operand. It will be ignored.`
 			)
@@ -98,7 +100,18 @@ export const handleOperand = (operand: string, stack: number[]): number[] => {
  * @param stack - active stack being evaluated
  * @returns stack with new values after operator is applied
  */
-export const handleOperator = (operator: string, stack: number[]): number[] => {
+export const handleOperator = (
+	operator: string,
+	stack: number[],
+	previousStack: number[]
+): number[] => {
+	if (operator === '/' && stack[stack.length - 1] === 0) {
+		console.log(
+			'"0" is not a valid divisor. Ignoring previous input expression and restoring previous stack.'
+		)
+		return previousStack
+	}
+
 	if (stack.length < 2) {
 		console.error(
 			`Error: Operators require 2 operands to evaluate. The problematic operator "${operator}" will be ignored \nPlease add another operand before adding another operator.`
@@ -107,8 +120,9 @@ export const handleOperator = (operator: string, stack: number[]): number[] => {
 	}
 
 	const currentOperands = [stack.pop()!, stack.pop()!]
+
 	const newOperand = operators[operator](currentOperands[1], currentOperands[0])
-	stack.unshift(newOperand)
+	stack.unshift(roundToThreeDecimalPlaces(newOperand.toString()))
 
 	return stack
 }

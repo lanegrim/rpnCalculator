@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.handleOperator = exports.handleOperand = exports.stringifyStack = exports.roundToThreeDecimalPlaces = exports.standardizeString = exports.formatInputExpression = exports.isNullInput = exports.operators = void 0;
+exports.handleOperator = exports.handleOperand = exports.stringifyStack = exports.roundToThreeDecimalPlaces = exports.standardizeString = exports.formatInputExpression = exports.isNullInput = exports.validNonOperatorStrings = exports.operators = void 0;
 // all valid operators for four-function calculator
 exports.operators = {
     '+': (a, b) => a + b,
@@ -9,6 +9,7 @@ exports.operators = {
     x: (a, b) => a * b,
     '/': (a, b) => a / b,
 };
+exports.validNonOperatorStrings = ['q', 'c', 'h', ' '];
 /**
  * Checks if input string is empty
  * @param input - string of unknown length
@@ -41,7 +42,7 @@ const formatInputExpression = (inputExpression) => {
         else if (splitInput[i] in exports.operators) {
             formattedInput.push(splitInput[i]);
         }
-        else if (splitInput[i] !== ' ') {
+        else if (splitInput[i] in exports.validNonOperatorStrings) {
             console.log(`Warning: "${splitInput[i]}" is not a valid operator or operand. It will be ignored.`);
         }
     }
@@ -96,14 +97,18 @@ exports.handleOperand = handleOperand;
  * @param stack - active stack being evaluated
  * @returns stack with new values after operator is applied
  */
-const handleOperator = (operator, stack) => {
+const handleOperator = (operator, stack, previousStack) => {
+    if (operator === '/' && stack[stack.length - 1] === 0) {
+        console.log('"0" is not a valid divisor. Ignoring previous input expression and restoring previous stack.');
+        return previousStack;
+    }
     if (stack.length < 2) {
         console.error(`Error: Operators require 2 operands to evaluate. The problematic operator "${operator}" will be ignored \nPlease add another operand before adding another operator.`);
         return stack;
     }
     const currentOperands = [stack.pop(), stack.pop()];
     const newOperand = exports.operators[operator](currentOperands[1], currentOperands[0]);
-    stack.unshift(newOperand);
+    stack.unshift((0, exports.roundToThreeDecimalPlaces)(newOperand.toString()));
     return stack;
 };
 exports.handleOperator = handleOperator;

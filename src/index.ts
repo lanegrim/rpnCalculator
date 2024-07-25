@@ -18,8 +18,9 @@ const rl = readline.createInterface({
 
 const promptForInitialInput = (): void => {
 	console.log('Reverse Polish Notation Calculator')
-	console.log('Press c to clear stack')
-	console.log('Press q or ctl+c to exit')
+	console.log('Enter c to clear stack')
+	console.log('Enter q or ctl+c to exit')
+	console.log('Enter h for more info')
 	rl.setPrompt('Input an expression:')
 	rl.prompt()
 }
@@ -29,7 +30,11 @@ const handleInput = (input: string): void => {
 	let standardizedInput = standardizeString(input)
 
 	if (isNullInput(standardizedInput)) {
-		console.log(`current stack: [${stringifyStack(activeStack)}]`)
+		console.log(
+			`previous stack: [${stringifyStack(
+				previousStack
+			)}]  ==> current stack: [${stringifyStack(activeStack)}]`
+		)
 		return
 	}
 
@@ -44,11 +49,27 @@ const handleInput = (input: string): void => {
 		standardizedInput = ''
 	}
 
+	if (standardizedInput === 'h') {
+		console.log(
+			'To calculate, enter an expression using integers, floats, and valid operators.'
+		)
+		console.log('Valid operators:')
+		console.log(' addition: "+"')
+		console.log(' subtraction: "-"')
+		console.log(' multiplication: "*" or "x"')
+		console.log(' division: "/"')
+		console.log(
+			'Operands will be processed as a stack, in first-in/last-out order'
+		)
+		console.log('Ex: "3 4 1 + *" will be evaluated as: "3 * (4+1)"')
+		console.log('Enter q or ctl+c to exit')
+	}
+
 	const tokens = formatInputExpression(standardizedInput)
 
 	tokens.forEach((token) => {
 		token in operators
-			? (activeStack = handleOperator(token, activeStack))
+			? (activeStack = handleOperator(token, activeStack, previousStack))
 			: (activeStack = handleOperand(token, activeStack))
 	})
 
@@ -60,7 +81,7 @@ const handleInput = (input: string): void => {
 }
 
 rl.on('line', (input: string): void => {
-	rl.setPrompt('->')
+	rl.setPrompt('')
 	rl.prompt()
 	handleInput(input)
 })
