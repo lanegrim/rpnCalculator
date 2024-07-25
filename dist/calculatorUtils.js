@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.truncateToThreeDecimalPlaces = exports.standardizeString = exports.isOperatorOrOperand = exports.splitOnWhiteSpace = exports.isNullInput = exports.operators = void 0;
+exports.stringifyStack = exports.truncateToThreeDecimalPlaces = exports.standardizeString = exports.isOperatorOrOperand = exports.splitOnWhiteSpace = exports.isNullInput = exports.operators = void 0;
 // all valid operators for four-function calculator
 exports.operators = {
     '+': (a, b) => a + b,
@@ -54,3 +54,12 @@ const truncateToThreeDecimalPlaces = (input) => {
     return parseFloat(input.toFixed(3));
 };
 exports.truncateToThreeDecimalPlaces = truncateToThreeDecimalPlaces;
+/**
+ * Joins stack into a string with tokens separated by whitespace
+ * @param stack - array of tokens
+ * @returns string of stack tokens joined with whitespace
+ */
+const stringifyStack = (stack) => {
+    return stack.join(' ');
+};
+exports.stringifyStack = stringifyStack;

@@ -22,7 +22,7 @@ const promptForInitialInput = () => {
 const handleInput = (input) => {
     const standardizedInput = (0, calculatorUtils_1.standardizeString)(input);
     if ((0, calculatorUtils_1.isNullInput)(standardizedInput)) {
-        console.log(`input: ${input} ==> current stack: [${activeStack}]`);
+        console.log(`input: ${input} ==> current stack: [${(0, calculatorUtils_1.stringifyStack)(activeStack)}]`);
         return;
     }
     if (standardizedInput === 'q') {
@@ -38,7 +38,7 @@ const handleInput = (input) => {
             activeStack.push(token);
         }
     });
-    console.log(`input: ${input}  ==> current stack: [${activeStack}]`);
+    console.log(`input: ${input}  ==> current stack: [${(0, calculatorUtils_1.stringifyStack)(activeStack)}]`);
 };
 rl.on('line', (input) => {
     handleInput(input);

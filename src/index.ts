@@ -6,6 +6,7 @@ import {
 	standardizeString,
 	isNullInput,
 	splitOnWhiteSpace,
+	stringifyStack,
 } from './calculatorUtils'
 
 let activeStack: string[] = []
@@ -31,7 +32,9 @@ const handleInput = (input: string): void => {
 	const standardizedInput = standardizeString(input)
 
 	if (isNullInput(standardizedInput)) {
-		console.log(`input: ${input} ==> current stack: [${activeStack}]`)
+		console.log(
+			`input: ${input} ==> current stack: [${stringifyStack(activeStack)}]`
+		)
 		return
 	}
 
@@ -52,7 +55,9 @@ const handleInput = (input: string): void => {
 		}
 	})
 
-	console.log(`input: ${input}  ==> current stack: [${activeStack}]`)
+	console.log(
+		`input: ${input}  ==> current stack: [${stringifyStack(activeStack)}]`
+	)
 }
 
 rl.on('line', (input: string): void => {

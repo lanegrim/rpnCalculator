@@ -51,3 +51,12 @@ export const standardizeString = (inputString: string): string => {
 export const truncateToThreeDecimalPlaces = (input: number): number => {
 	return parseFloat(input.toFixed(3))
 }
+
+/**
+ * Joins stack into a string with tokens separated by whitespace
+ * @param stack - array of tokens
+ * @returns string of stack tokens joined with whitespace
+ */
+export const stringifyStack = (stack: string[]): string => {
+	return stack.join(' ')
+}
