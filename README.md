@@ -12,6 +12,6 @@ The main design consideration in the development of this tool to consistently pr
 
 ## Further Questions, Considerations, and Possible Improvements
 
-- Investigate best practices around testing typescript files. Should the tests check the typescript files or the transpiled javascript files?
-- Investigate best practices around typescript file structure with regards to .ts files and their resulting .js files being colacted, etc. etc.
+- Investigate best practices around testing typescript files. Should the tests check the .ts files or the transpiled .js files?
+- Investigate best practices around typescript file structure with regards to .ts files and their transpiled .js files being colocated, whether to have git track the transpiled .js files, etc. etc.
 - As the functionality has expanded to handle more edge cases and improper formatting, some of the functions involved have gotten bloated and need to be pieced out for readability
