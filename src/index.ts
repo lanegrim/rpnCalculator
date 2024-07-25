@@ -10,7 +10,7 @@ import {
 	handleOperator,
 } from './calculatorUtils'
 
-let activeStack: (string | number)[] = []
+let activeStack: number[] = []
 
 const rl = readline.createInterface({
 	input: process.stdin,
@@ -53,7 +53,7 @@ const handleInput = (input: string): void => {
 	tokens.forEach((token) => {
 		if (isOperatorOrOperand(token)) {
 			token in operators
-				? handleOperator(token, activeStack)
+				? (activeStack = handleOperator(token, activeStack))
 				: (activeStack = handleOperand(token, activeStack))
 		}
 	})

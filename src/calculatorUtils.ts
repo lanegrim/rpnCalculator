@@ -71,10 +71,7 @@ export const stringifyStack = (stack: (string | number)[]): string => {
  * @param stack - active stack being evaluated
  * @returns stack with new operand truncated and pushed on
  */
-export const handleOperand = (
-	operand: string,
-	stack: (string | number)[]
-): (string | number)[] => {
+export const handleOperand = (operand: string, stack: number[]): number[] => {
 	stack.push(roundToThreeDecimalPlaces(operand))
 	return stack
 }
@@ -85,9 +82,17 @@ export const handleOperand = (
  * @param stack - active stack being evaluated
  * @returns stack with new values after operator is applied
  */
-export const handleOperator = (
-	operator: string,
-	stack: (string | number)[]
-): (string | number)[] => {
+export const handleOperator = (operator: string, stack: number[]): number[] => {
+	if (stack.length < 2) {
+		console.error(
+			`Error: Operators require 2 operands to evaluate. Removing the problematic operator (${operator}) \nPlease add another operand before adding another operator.`
+		)
+		return stack
+	}
+
+	const currentOperands = [stack.pop()!, stack.pop()!]
+	const newOperand = operators[operator](currentOperands[1], currentOperands[0])
+	stack.unshift(newOperand)
+
 	return stack
 }

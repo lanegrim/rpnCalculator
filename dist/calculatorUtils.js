@@ -85,6 +85,13 @@ exports.handleOperand = handleOperand;
  * @returns stack with new values after operator is applied
  */
 const handleOperator = (operator, stack) => {
+    if (stack.length < 2) {
+        console.error(`Error: Operators require 2 operands to evaluate. Removing the problematic operator (${operator}) \nPlease add another operand before adding another operator.`);
+        return stack;
+    }
+    const currentOperands = [stack.pop(), stack.pop()];
+    const newOperand = exports.operators[operator](currentOperands[1], currentOperands[0]);
+    stack.unshift(newOperand);
     return stack;
 };
 exports.handleOperator = handleOperator;

@@ -36,7 +36,7 @@ const handleInput = (input) => {
     tokens.forEach((token) => {
         if ((0, calculatorUtils_1.isOperatorOrOperand)(token)) {
             token in calculatorUtils_1.operators
-                ? (0, calculatorUtils_1.handleOperator)(token, activeStack)
+                ? (activeStack = (0, calculatorUtils_1.handleOperator)(token, activeStack))
                 : (activeStack = (0, calculatorUtils_1.handleOperand)(token, activeStack));
         }
     });
