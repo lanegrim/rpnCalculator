@@ -21,6 +21,7 @@ const promptForInitialInput = (): void => {
 		'To solve, please format expressions with operands preceding operators and single spaces between each'
 	)
 	console.log('Ex: "6 4 3 + -" will evaluate to "-1"')
+	console.log('Press c to clear stack')
 	console.log('Press q or ctl+c to exit')
 	rl.setPrompt('Input an expression to begin:')
 	rl.prompt()
@@ -30,13 +31,17 @@ const handleInput = (input: string): void => {
 	const standardizedInput = standardizeString(input)
 
 	if (isNullInput(standardizedInput)) {
-		console.log(`input: [${input}] --- current stack: [${activeStack}]`)
+		console.log(`input: ${input} ==> current stack: [${activeStack}]`)
 		return
 	}
 
 	if (standardizedInput === 'q') {
 		rl.close()
 		return
+	}
+
+	if (standardizedInput === 'c') {
+		activeStack = []
 	}
 
 	const tokens = splitOnWhiteSpace(standardizedInput)
@@ -47,7 +52,7 @@ const handleInput = (input: string): void => {
 		}
 	})
 
-	console.log(`input: [${input}] --- current stack: [${activeStack}]`)
+	console.log(`input: ${input}  ==> current stack: [${activeStack}]`)
 }
 
 rl.on('line', (input: string): void => {

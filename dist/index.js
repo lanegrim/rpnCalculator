@@ -14,6 +14,7 @@ const promptForInitialInput = () => {
     console.log('Reverse Polish Notation Calculator');
     console.log('To solve, please format expressions with operands preceding operators and single spaces between each');
     console.log('Ex: "6 4 3 + -" will evaluate to "-1"');
+    console.log('Press c to clear stack');
     console.log('Press q or ctl+c to exit');
     rl.setPrompt('Input an expression to begin:');
     rl.prompt();
@@ -21,12 +22,15 @@ const promptForInitialInput = () => {
 const handleInput = (input) => {
     const standardizedInput = (0, calculatorUtils_1.standardizeString)(input);
     if ((0, calculatorUtils_1.isNullInput)(standardizedInput)) {
-        console.log(`input: [${input}] --- current stack: [${activeStack}]`);
+        console.log(`input: ${input} ==> current stack: [${activeStack}]`);
         return;
     }
     if (standardizedInput === 'q') {
         rl.close();
         return;
+    }
+    if (standardizedInput === 'c') {
+        activeStack = [];
     }
     const tokens = (0, calculatorUtils_1.splitOnWhiteSpace)(standardizedInput);
     tokens.forEach((token) => {
@@ -34,7 +38,7 @@ const handleInput = (input) => {
             activeStack.push(token);
         }
     });
-    console.log(`input: [${input}] --- current stack: [${activeStack}]`);
+    console.log(`input: ${input}  ==> current stack: [${activeStack}]`);
 };
 rl.on('line', (input) => {
     handleInput(input);
