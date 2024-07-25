@@ -18,14 +18,6 @@ const isNullInput = (input) => {
     return input.length === 0;
 };
 exports.isNullInput = isNullInput;
-/**
- * Transforms an expression into an array of token
- * @param expression - a string comprised of tokens and whitespace
- * @returns array of token strings
- */
-// export const splitOnWhiteSpace = (expression: string): string[] => {
-// 	return expression.split(/\s+/)
-// }
 const formatInputExpression = (inputExpression) => {
     const splitInput = inputExpression.split('');
     let formattedInput = [];
@@ -45,14 +37,6 @@ const formatInputExpression = (inputExpression) => {
     return formattedInput;
 };
 exports.formatInputExpression = formatInputExpression;
-/**
- * Checks if the input string is a valid calculator operator or number
- * @param token - substring of calculator input string
- * @returns boolean denoting validity of token
- */
-// export const isOperatorOrOperand = (token: string): boolean => {
-// 	return token in operators || !isNaN(parseFloat(token))
-// }
 /**
  * Lowercases and trims input string
  * @param inputString - raw string from user input

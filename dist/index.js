@@ -16,7 +16,7 @@ const promptForInitialInput = () => {
     console.log('Ex: "6 4 3 + -" will evaluate to "-1"');
     console.log('Press c to clear stack');
     console.log('Press q or ctl+c to exit');
-    rl.setPrompt('Input an expression to begin:');
+    rl.setPrompt('Input an expression:');
     rl.prompt();
 };
 const handleInput = (input) => {
