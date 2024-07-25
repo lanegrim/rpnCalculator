@@ -48,8 +48,12 @@ export const standardizeString = (inputString: string): string => {
  * @param input - float to be truncated
  * @returns truncated float
  */
-export const truncateToThreeDecimalPlaces = (input: string): string => {
-	return parseFloat(input).toFixed(3)
+export const roundToThreeDecimalPlaces = (input: string): number => {
+	let roundedValue = Math.round(parseFloat(input) * 1000) / 1000
+	if (roundedValue % 1 === 0) {
+		roundedValue = Math.floor(roundedValue)
+	}
+	return roundedValue
 }
 
 /**
@@ -71,7 +75,7 @@ export const handleOperand = (
 	operand: string,
 	stack: (string | number)[]
 ): (string | number)[] => {
-	stack.push(truncateToThreeDecimalPlaces(operand))
+	stack.push(roundToThreeDecimalPlaces(operand))
 	return stack
 }
 

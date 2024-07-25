@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.handleOperator = exports.handleOperand = exports.stringifyStack = exports.truncateToThreeDecimalPlaces = exports.standardizeString = exports.isOperatorOrOperand = exports.splitOnWhiteSpace = exports.isNullInput = exports.operators = void 0;
+exports.handleOperator = exports.handleOperand = exports.stringifyStack = exports.roundToThreeDecimalPlaces = exports.standardizeString = exports.isOperatorOrOperand = exports.splitOnWhiteSpace = exports.isNullInput = exports.operators = void 0;
 // all valid operators for four-function calculator
 exports.operators = {
     '+': (a, b) => a + b,
@@ -50,10 +50,14 @@ exports.standardizeString = standardizeString;
  * @param input - float to be truncated
  * @returns truncated float
  */
-const truncateToThreeDecimalPlaces = (input) => {
-    return parseFloat(input).toFixed(3);
+const roundToThreeDecimalPlaces = (input) => {
+    let roundedValue = Math.round(parseFloat(input) * 1000) / 1000;
+    if (roundedValue % 1 === 0) {
+        roundedValue = Math.floor(roundedValue);
+    }
+    return roundedValue;
 };
-exports.truncateToThreeDecimalPlaces = truncateToThreeDecimalPlaces;
+exports.roundToThreeDecimalPlaces = roundToThreeDecimalPlaces;
 /**
  * Joins stack into a string with tokens separated by whitespace
  * @param stack - array of tokens
@@ -70,7 +74,7 @@ exports.stringifyStack = stringifyStack;
  * @returns stack with new operand truncated and pushed on
  */
 const handleOperand = (operand, stack) => {
-    stack.push((0, exports.truncateToThreeDecimalPlaces)(operand));
+    stack.push((0, exports.roundToThreeDecimalPlaces)(operand));
     return stack;
 };
 exports.handleOperand = handleOperand;
