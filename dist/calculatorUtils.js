@@ -24,7 +24,7 @@ exports.isNullInput = isNullInput;
  * @returns array of token strings
  */
 const splitOnWhiteSpace = (expression) => {
-    return expression.trim().split(/\s+/);
+    return expression.split(/\s+/);
 };
 exports.splitOnWhiteSpace = splitOnWhiteSpace;
 /**
@@ -42,7 +42,7 @@ exports.isOperatorOrOperand = isOperatorOrOperand;
  * @returns standardized string ready for comparison
  */
 const standardizeString = (inputString) => {
-    return inputString.toLocaleLowerCase().trim();
+    return inputString.toLowerCase().trim();
 };
 exports.standardizeString = standardizeString;
 /**

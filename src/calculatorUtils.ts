@@ -22,7 +22,7 @@ export const isNullInput = (input: string): boolean => {
  * @returns array of token strings
  */
 export const splitOnWhiteSpace = (expression: string): string[] => {
-	return expression.trim().split(/\s+/)
+	return expression.split(/\s+/)
 }
 
 /**
@@ -40,7 +40,7 @@ export const isOperatorOrOperand = (token: string): boolean => {
  * @returns standardized string ready for comparison
  */
 export const standardizeString = (inputString: string): string => {
-	return inputString.toLocaleLowerCase().trim()
+	return inputString.toLowerCase().trim()
 }
 
 /**
