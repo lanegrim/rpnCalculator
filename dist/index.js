@@ -12,25 +12,26 @@ const rl = readline_1.default.createInterface({
 });
 const promptForInitialInput = () => {
     console.log('Reverse Polish Notation Calculator');
-    console.log('To solve, please format expressions with operands preceding operators and single spaces between each');
-    console.log('Ex: "6 4 3 + -" will evaluate to "-1"');
     console.log('Press c to clear stack');
     console.log('Press q or ctl+c to exit');
     rl.setPrompt('Input an expression:');
     rl.prompt();
 };
 const handleInput = (input) => {
-    const standardizedInput = (0, calculatorUtils_1.standardizeString)(input);
+    let previousStack = [...activeStack];
+    let standardizedInput = (0, calculatorUtils_1.standardizeString)(input);
     if ((0, calculatorUtils_1.isNullInput)(standardizedInput)) {
-        console.log(`input: ${input} ==> current stack: [${(0, calculatorUtils_1.stringifyStack)(activeStack)}]`);
+        console.log(`current stack: [${(0, calculatorUtils_1.stringifyStack)(activeStack)}]`);
         return;
     }
     if (standardizedInput === 'q') {
+        console.log('Exiting...');
         rl.close();
         return;
     }
     if (standardizedInput === 'c') {
         activeStack = [];
+        standardizedInput = '';
     }
     const tokens = (0, calculatorUtils_1.formatInputExpression)(standardizedInput);
     tokens.forEach((token) => {
@@ -38,9 +39,11 @@ const handleInput = (input) => {
             ? (activeStack = (0, calculatorUtils_1.handleOperator)(token, activeStack))
             : (activeStack = (0, calculatorUtils_1.handleOperand)(token, activeStack));
     });
-    console.log(`input: ${input}  ==> current stack: [${(0, calculatorUtils_1.stringifyStack)(activeStack)}]`);
+    console.log(`previous stack: [${(0, calculatorUtils_1.stringifyStack)(previousStack)}]  ==> current stack: [${(0, calculatorUtils_1.stringifyStack)(activeStack)}]`);
 };
 rl.on('line', (input) => {
+    rl.setPrompt('->');
+    rl.prompt();
     handleInput(input);
 });
 if (require.main === module) {

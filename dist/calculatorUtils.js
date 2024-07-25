@@ -31,15 +31,18 @@ const formatInputExpression = (inputExpression) => {
         if (!isNaN(parseFloat(splitInput[i])) || splitInput[i] === '.') {
             tokenPlaceholder += splitInput[i];
             if (isNaN(parseFloat(splitInput[i + 1])) && splitInput[i + 1] !== '.') {
+                if (tokenPlaceholder.match(/./g).length > 1) {
+                    console.log(`Warning: Operands cannot contain more than one decimal. Only digits before the second decimal point in "${tokenPlaceholder}" will be evaluated`);
+                }
                 formattedInput.push(tokenPlaceholder);
                 tokenPlaceholder = '';
             }
         }
-        if (splitInput[i] in exports.operators) {
+        else if (splitInput[i] in exports.operators) {
             formattedInput.push(splitInput[i]);
         }
-        else if (isNaN(parseFloat(splitInput[i])) && splitInput[i] !== ' ') {
-            console.error(`"${splitInput[i]}" is not a valid operator or operand. It will be ignored.`);
+        else if (splitInput[i] !== ' ') {
+            console.log(`Warning: "${splitInput[i]}" is not a valid operator or operand. It will be ignored.`);
         }
     }
     return formattedInput;
@@ -95,7 +98,7 @@ exports.handleOperand = handleOperand;
  */
 const handleOperator = (operator, stack) => {
     if (stack.length < 2) {
-        console.error(`Error: Operators require 2 operands to evaluate. Removing the problematic operator (${operator}) \nPlease add another operand before adding another operator.`);
+        console.error(`Error: Operators require 2 operands to evaluate. The problematic operator "${operator}" will be ignored \nPlease add another operand before adding another operator.`);
         return stack;
     }
     const currentOperands = [stack.pop(), stack.pop()];

@@ -30,16 +30,19 @@ export const formatInputExpression = (inputExpression: string) => {
 			tokenPlaceholder += splitInput[i]
 
 			if (isNaN(parseFloat(splitInput[i + 1])) && splitInput[i + 1] !== '.') {
+				if (tokenPlaceholder.match(/./g)!.length > 1) {
+					console.log(
+						`Warning: Operands cannot contain more than one decimal. Only digits before the second decimal point in "${tokenPlaceholder}" will be evaluated`
+					)
+				}
 				formattedInput.push(tokenPlaceholder)
 				tokenPlaceholder = ''
 			}
-		}
-
-		if (splitInput[i] in operators) {
+		} else if (splitInput[i] in operators) {
 			formattedInput.push(splitInput[i])
-		} else if (isNaN(parseFloat(splitInput[i])) && splitInput[i] !== ' ') {
-			console.error(
-				`"${splitInput[i]}" is not a valid operator or operand. It will be ignored.`
+		} else if (splitInput[i] !== ' ') {
+			console.log(
+				`Warning: "${splitInput[i]}" is not a valid operator or operand. It will be ignored.`
 			)
 		}
 	}
@@ -98,7 +101,7 @@ export const handleOperand = (operand: string, stack: number[]): number[] => {
 export const handleOperator = (operator: string, stack: number[]): number[] => {
 	if (stack.length < 2) {
 		console.error(
-			`Error: Operators require 2 operands to evaluate. Removing the problematic operator (${operator}) \nPlease add another operand before adding another operator.`
+			`Error: Operators require 2 operands to evaluate. The problematic operator "${operator}" will be ignored \nPlease add another operand before adding another operator.`
 		)
 		return stack
 	}
