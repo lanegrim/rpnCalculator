@@ -18,6 +18,11 @@ const isNullInput = (input) => {
     return input.length === 0;
 };
 exports.isNullInput = isNullInput;
+/**
+ * Formats the input expression to contain only valid tokens and splits it into proper integers, floats, and operators
+ * @param inputExpression - string representing user input expression
+ * @returns formatted array of valid tokens
+ */
 const formatInputExpression = (inputExpression) => {
     const splitInput = inputExpression.split('');
     let formattedInput = [];
@@ -32,6 +37,9 @@ const formatInputExpression = (inputExpression) => {
         }
         if (splitInput[i] in exports.operators) {
             formattedInput.push(splitInput[i]);
+        }
+        else if (isNaN(parseFloat(splitInput[i])) && splitInput[i] !== ' ') {
+            console.error(`"${splitInput[i]}" is not a valid operator or operand. It will be ignored.`);
         }
     }
     return formattedInput;
