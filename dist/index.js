@@ -15,7 +15,7 @@ const promptForInitialInput = () => {
     console.log('Enter c to clear stack');
     console.log('Enter q or ctl+c to exit');
     console.log('Enter h for more info');
-    rl.setPrompt('Input an expression:');
+    rl.setPrompt('Input an expression to begin: ');
     rl.prompt();
 };
 const handleInput = (input) => {

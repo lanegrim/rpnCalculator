@@ -32,7 +32,8 @@ const formatInputExpression = (inputExpression) => {
         if (!isNaN(parseFloat(splitInput[i])) || splitInput[i] === '.') {
             tokenPlaceholder += splitInput[i];
             if (isNaN(parseFloat(splitInput[i + 1])) && splitInput[i + 1] !== '.') {
-                if (tokenPlaceholder.match(/./g).length > 1) {
+                if (tokenPlaceholder.match(/\./g) &&
+                    tokenPlaceholder.match(/\./g).length > 1) {
                     console.log(`Warning: Operands cannot contain more than one decimal. Only digits before the second decimal point in "${tokenPlaceholder}" will be evaluated`);
                 }
                 formattedInput.push(tokenPlaceholder);
@@ -99,7 +100,7 @@ exports.handleOperand = handleOperand;
  */
 const handleOperator = (operator, stack, previousStack) => {
     if (operator === '/' && stack[stack.length - 1] === 0) {
-        console.log('"0" is not a valid divisor. Ignoring previous input expression and restoring previous stack.');
+        console.log('Error: "0" is not a valid divisor. Ignoring previous input expression and restoring previous stack.');
         return previousStack;
     }
     if (stack.length < 2) {

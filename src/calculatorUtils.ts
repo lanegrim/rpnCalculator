@@ -32,7 +32,10 @@ export const formatInputExpression = (inputExpression: string) => {
 			tokenPlaceholder += splitInput[i]
 
 			if (isNaN(parseFloat(splitInput[i + 1])) && splitInput[i + 1] !== '.') {
-				if (tokenPlaceholder.match(/./g)!.length > 1) {
+				if (
+					tokenPlaceholder.match(/\./g) &&
+					tokenPlaceholder.match(/\./g)!.length > 1
+				) {
 					console.log(
 						`Warning: Operands cannot contain more than one decimal. Only digits before the second decimal point in "${tokenPlaceholder}" will be evaluated`
 					)
@@ -107,7 +110,7 @@ export const handleOperator = (
 ): number[] => {
 	if (operator === '/' && stack[stack.length - 1] === 0) {
 		console.log(
-			'"0" is not a valid divisor. Ignoring previous input expression and restoring previous stack.'
+			'Error: "0" is not a valid divisor. Ignoring previous input expression and restoring previous stack.'
 		)
 		return previousStack
 	}
