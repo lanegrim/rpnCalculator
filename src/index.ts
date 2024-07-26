@@ -59,6 +59,7 @@ export const handleInput = (userInput: string): number[] => {
 	if (standardizedInput === 'c') {
 		activeStack = []
 		standardizedInput = ''
+		return activeStack
 	}
 
 	// On 'h' input, prints help text
@@ -99,7 +100,7 @@ export const handleInput = (userInput: string): number[] => {
 
 // passes user input from CLI to input handler fn
 rl.on('line', (input: string): void => {
-	rl.setPrompt('')
+	rl.setPrompt('>')
 	rl.prompt()
 	handleInput(input)
 })

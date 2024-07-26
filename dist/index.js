@@ -47,6 +47,7 @@ const handleInput = (userInput) => {
     if (standardizedInput === 'c') {
         activeStack = [];
         standardizedInput = '';
+        return activeStack;
     }
     // On 'h' input, prints help text
     if (standardizedInput === 'h') {
@@ -75,7 +76,7 @@ const handleInput = (userInput) => {
 exports.handleInput = handleInput;
 // passes user input from CLI to input handler fn
 rl.on('line', (input) => {
-    rl.setPrompt('');
+    rl.setPrompt('>');
     rl.prompt();
     (0, exports.handleInput)(input);
 });
