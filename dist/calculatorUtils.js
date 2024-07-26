@@ -60,7 +60,7 @@ const formatInputExpression = (inputExpression) => {
             else if (tokenIsNegative === false) {
                 formattedInput.push(splitInput[i]);
             }
-            // Prints a warning if non-valid characters are included in input string
+            // Prints a warning if invalid characters are included in input string
         }
         else if (exports.validNonOperatorStrings.indexOf(splitInput[i]) === -1) {
             console.log(`Warning: "${splitInput[i]}" is not a valid operator or operand. It will be ignored.`);
