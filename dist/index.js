@@ -80,8 +80,8 @@ exports.handleInput = handleInput;
 // passes user input from CLI to input handler fn
 rl.on('line', (input) => {
     rl.setPrompt('>');
-    rl.prompt();
     (0, exports.handleInput)(input);
+    rl.prompt();
 });
 // ensures module is run directly
 if (require.main === module) {

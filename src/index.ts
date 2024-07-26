@@ -105,8 +105,8 @@ export const handleInput = (userInput: string): number[] => {
 // passes user input from CLI to input handler fn
 rl.on('line', (input: string): void => {
 	rl.setPrompt('>')
-	rl.prompt()
 	handleInput(input)
+	rl.prompt()
 })
 
 // ensures module is run directly
