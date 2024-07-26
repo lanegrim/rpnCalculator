@@ -1,6 +1,5 @@
 import readline from 'readline'
 import {
-	operators,
 	standardizeString,
 	isNullInput,
 	stringifyStack,
@@ -8,6 +7,7 @@ import {
 	handleOperator,
 	formatInputExpression,
 } from './calculatorUtils'
+import { operators } from './calculatorData'
 
 let activeStack: number[] = []
 

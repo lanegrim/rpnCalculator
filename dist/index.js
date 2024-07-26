@@ -5,6 +5,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const readline_1 = __importDefault(require("readline"));
 const calculatorUtils_1 = require("./calculatorUtils");
+const calculatorData_1 = require("./calculatorData");
 let activeStack = [];
 const rl = readline_1.default.createInterface({
     input: process.stdin,
@@ -61,7 +62,7 @@ const handleInput = (userInput) => {
     const tokens = (0, calculatorUtils_1.formatInputExpression)(standardizedInput);
     // Iterates over formatted user input and passes operators and operands to handlers individually
     tokens.forEach((token) => {
-        token in calculatorUtils_1.operators
+        token in calculatorData_1.operators
             ? (activeStack = (0, calculatorUtils_1.handleOperator)(token, activeStack, previousStack))
             : (activeStack = (0, calculatorUtils_1.handleOperand)(token, activeStack));
     });

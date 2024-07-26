@@ -1,15 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.handleOperator = exports.handleOperand = exports.stringifyStack = exports.roundToThreeDecimalPlaces = exports.standardizeString = exports.formatInputExpression = exports.isNullInput = exports.validNonOperatorStrings = exports.operators = void 0;
+exports.handleOperator = exports.handleOperand = exports.stringifyStack = exports.roundToThreeDecimalPlaces = exports.standardizeString = exports.formatInputExpression = exports.isNullInput = void 0;
 // Valid operators for four-function calculator
-exports.operators = {
-    '+': (a, b) => a + b,
-    '-': (a, b) => a - b,
-    '*': (a, b) => a * b,
-    x: (a, b) => a * b,
-    '/': (a, b) => a / b,
-};
-exports.validNonOperatorStrings = ['q', 'c', 'h', ' '];
+const calculatorData_1 = require("./calculatorData");
 /**
  * Checks if input string is empty
  * @param input - string of unknown length
@@ -52,7 +45,7 @@ const formatInputExpression = (inputExpression) => {
             }
             // Checks for valid operators from remaining characters
         }
-        else if (splitInput[i] in exports.operators) {
+        else if (splitInput[i] in calculatorData_1.operators) {
             // Checks that a '-' is not already being used to indicate a negative number before adding it to the formatted expression
             if (splitInput[i] !== '-') {
                 formattedInput.push(splitInput[i]);
@@ -62,7 +55,7 @@ const formatInputExpression = (inputExpression) => {
             }
             // Prints a warning if invalid characters are included in input string
         }
-        else if (exports.validNonOperatorStrings.indexOf(splitInput[i]) === -1) {
+        else if (calculatorData_1.validNonOperatorStrings.indexOf(splitInput[i]) === -1) {
             console.log(`Warning: "${splitInput[i]}" is not a valid operator or operand. It will be ignored.`);
         }
     }
@@ -131,7 +124,7 @@ const handleOperator = (operator, stack, previousStack) => {
     // Removes and stores the top two operands from the ative stack
     const currentOperands = [stack.pop(), stack.pop()];
     // Calculates a new operand using the current operator and the stored operands, then adds new operand to active stack
-    const newOperand = exports.operators[operator](currentOperands[1], currentOperands[0]);
+    const newOperand = calculatorData_1.operators[operator](currentOperands[1], currentOperands[0]);
     stack.push((0, exports.roundToThreeDecimalPlaces)(newOperand.toString()));
     return stack;
 };
