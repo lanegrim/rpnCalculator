@@ -35,13 +35,13 @@ const handleInput = (userInput) => {
     // On null input, prints previous and current stacks without altering them
     if ((0, calculatorUtils_1.isNullInput)(standardizedInput)) {
         console.log(`previous stack: [${(0, calculatorUtils_1.stringifyStack)(previousStack)}]  ==> current stack: [${(0, calculatorUtils_1.stringifyStack)(activeStack)}]`);
-        return;
+        return activeStack;
     }
     // On 'q' input, exits
     if (standardizedInput === 'q') {
         console.log('Exiting...');
         rl.close();
-        return;
+        return [];
     }
     // On 'c' input, clears current stack
     if (standardizedInput === 'c') {
@@ -70,6 +70,7 @@ const handleInput = (userInput) => {
     // Prints the formatted input, as well as the active and previous stacks
     console.log(`input evaluated as: "${tokens.join(' ')}"`);
     console.log(`previous stack: [${(0, calculatorUtils_1.stringifyStack)(previousStack)}]  ==> current stack: [${(0, calculatorUtils_1.stringifyStack)(activeStack)}]`);
+    return activeStack;
 };
 exports.handleInput = handleInput;
 // passes user input from CLI to input handler fn
@@ -78,6 +79,7 @@ rl.on('line', (input) => {
     rl.prompt();
     (0, exports.handleInput)(input);
 });
+// ensures module is run directly
 if (require.main === module) {
     promptForInitialInput();
 }

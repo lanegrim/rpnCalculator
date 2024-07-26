@@ -34,7 +34,7 @@ const promptForInitialInput = (): void => {
  * @param userInput - input string passed from CLI via readline interface
  * @returns void
  */
-export const handleInput = (userInput: string): void => {
+export const handleInput = (userInput: string): number[] => {
 	let previousStack: number[] = [...activeStack]
 	let standardizedInput = standardizeString(userInput)
 
@@ -45,14 +45,14 @@ export const handleInput = (userInput: string): void => {
 				previousStack
 			)}]  ==> current stack: [${stringifyStack(activeStack)}]`
 		)
-		return
+		return activeStack
 	}
 
 	// On 'q' input, exits
 	if (standardizedInput === 'q') {
 		console.log('Exiting...')
 		rl.close()
-		return
+		return []
 	}
 
 	// On 'c' input, clears current stack
@@ -93,6 +93,8 @@ export const handleInput = (userInput: string): void => {
 			previousStack
 		)}]  ==> current stack: [${stringifyStack(activeStack)}]`
 	)
+
+	return activeStack
 }
 
 // passes user input from CLI to input handler fn
@@ -102,6 +104,7 @@ rl.on('line', (input: string): void => {
 	handleInput(input)
 })
 
+// ensures module is run directly
 if (require.main === module) {
 	promptForInitialInput()
 }
