@@ -1,7 +1,5 @@
 # Reverse Polish Notation Calculator
 
-## Description
-
 This repo contains a CLI implementation of a reverse polish notation calculator built using Typescript.
 The main design consideration in the development of this tool to consistently provide the user with a clear picture of the state of their calculation. This manifests in a few ways:
 

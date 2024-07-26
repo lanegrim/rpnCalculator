@@ -1,4 +1,4 @@
-// all valid operators for four-function calculator
+// Valid operators for four-function calculator
 export const operators: { [key: string]: (a: number, b: number) => number } = {
 	'+': (a, b) => a + b,
 	'-': (a, b) => a - b,
@@ -27,8 +27,10 @@ export const formatInputExpression = (inputExpression: string): string[] => {
 	const splitInput = inputExpression.split('')
 	let formattedInput = []
 	let tokenPlaceholder = ''
+
 	for (let i = 0; i < splitInput.length; i++) {
 		let tokenIsNegative = false
+		// Checks for negative integers and floats
 		if (splitInput[i] === '-') {
 			if (!isNaN(parseFloat(splitInput[i + 1])) || splitInput[i + 1] === '.') {
 				tokenIsNegative = true
@@ -36,10 +38,13 @@ export const formatInputExpression = (inputExpression: string): string[] => {
 			}
 		}
 
+		// Reassembles multi-characters integers and floats from split input
 		if (!isNaN(parseFloat(splitInput[i])) || splitInput[i] === '.') {
 			tokenPlaceholder += splitInput[i]
 
+			// Checks next character for continuation of current number
 			if (isNaN(parseFloat(splitInput[i + 1])) && splitInput[i + 1] !== '.') {
+				// If number contains multiple decimal points, prints warning and only evaluates digits before the second decimal point.
 				if (
 					tokenPlaceholder.match(/\./g) &&
 					tokenPlaceholder.match(/\./g)!.length > 1
@@ -51,12 +56,16 @@ export const formatInputExpression = (inputExpression: string): string[] => {
 				formattedInput.push(tokenPlaceholder)
 				tokenPlaceholder = ''
 			}
+
+			// Checks for valid operators from remaining characters
 		} else if (splitInput[i] in operators) {
+			// Checks that a '-' is not already being used to indicate a negative number before adding it to the formatted expression
 			if (splitInput[i] !== '-') {
 				formattedInput.push(splitInput[i])
 			} else if (tokenIsNegative === false) {
 				formattedInput.push(splitInput[i])
 			}
+			// Prints a warning if non-valid characters are included in input string
 		} else if (splitInput[i]! in validNonOperatorStrings) {
 			console.log(
 				`Warning: "${splitInput[i]}" is not a valid operator or operand. It will be ignored.`
@@ -120,6 +129,7 @@ export const handleOperator = (
 	stack: number[],
 	previousStack: number[]
 ): number[] => {
+	// Checks for divide-by-zero error and reverts back to previous stack if encountered
 	if (operator === '/' && stack[stack.length - 1] === 0) {
 		console.log(
 			'Error: "0" is not a valid divisor. Ignoring previous input expression and restoring previous stack.'
@@ -127,15 +137,18 @@ export const handleOperator = (
 		return previousStack
 	}
 
+	// Checks for minimum number of operands in stack required by operator
 	if (stack.length < 2) {
 		console.error(
-			`Error: Operators require 2 operands to evaluate. The problematic operator "${operator}" will be ignored \nPlease add another operand before adding another operator.`
+			`Error: Operators require 2 operands to evaluate. The problematic operator "${operator}" will be ignored \nPlease provide an additional operand before adding an operator.`
 		)
 		return stack
 	}
 
+	// Removes and stores the top two operands from the ative stack
 	const currentOperands = [stack.pop()!, stack.pop()!]
 
+	// Calculates a new operand using the current operator and the stored operands, then adds new operand to active stack
 	const newOperand = operators[operator](currentOperands[1], currentOperands[0])
 	stack.push(roundToThreeDecimalPlaces(newOperand.toString()))
 
