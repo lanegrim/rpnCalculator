@@ -29,7 +29,7 @@ tsc
 ### To run
 
 ```
-node dist/index.js
+npm start
 ```
 
 ### To run tests

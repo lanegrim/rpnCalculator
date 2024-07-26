@@ -34,7 +34,7 @@ const promptForInitialInput = (): void => {
  * @param userInput - input string passed from CLI via readline interface
  * @returns void
  */
-const handleInput = (userInput: string): void => {
+export const handleInput = (userInput: string): void => {
 	let previousStack: number[] = [...activeStack]
 	let standardizedInput = standardizeString(userInput)
 

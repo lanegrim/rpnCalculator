@@ -3,6 +3,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.handleInput = void 0;
 const readline_1 = __importDefault(require("readline"));
 const calculatorUtils_1 = require("./calculatorUtils");
 const calculatorData_1 = require("./calculatorData");
@@ -70,11 +71,12 @@ const handleInput = (userInput) => {
     console.log(`input evaluated as: "${tokens.join(' ')}"`);
     console.log(`previous stack: [${(0, calculatorUtils_1.stringifyStack)(previousStack)}]  ==> current stack: [${(0, calculatorUtils_1.stringifyStack)(activeStack)}]`);
 };
+exports.handleInput = handleInput;
 // passes user input from CLI to input handler fn
 rl.on('line', (input) => {
     rl.setPrompt('');
     rl.prompt();
-    handleInput(input);
+    (0, exports.handleInput)(input);
 });
 if (require.main === module) {
     promptForInitialInput();
