@@ -41,7 +41,7 @@ export const formatInputExpression = (inputExpression: string): string[] => {
 					tokenPlaceholder.match(/\./g) &&
 					tokenPlaceholder.match(/\./g)!.length > 1
 				) {
-					console.log(
+					console.warn(
 						`Warning: Operands cannot contain more than one decimal. Only digits before the second decimal point in "${tokenPlaceholder}" will be evaluated`
 					)
 				}
@@ -59,7 +59,7 @@ export const formatInputExpression = (inputExpression: string): string[] => {
 			}
 			// Prints a warning if invalid characters are included in input string
 		} else if (validNonOperatorStrings.indexOf(splitInput[i]) === -1) {
-			console.log(
+			console.warn(
 				`Warning: "${splitInput[i]}" is not a valid operator or operand. It will be ignored.`
 			)
 		}
@@ -123,7 +123,7 @@ export const handleOperator = (
 ): number[] => {
 	// Checks for divide-by-zero error and reverts back to previous stack if encountered
 	if (operator === '/' && stack[stack.length - 1] === 0) {
-		console.log(
+		console.error(
 			'Error: "0" is not a valid divisor. Ignoring previous input expression and restoring previous stack.'
 		)
 		return previousStack

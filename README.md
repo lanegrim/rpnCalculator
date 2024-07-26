@@ -38,8 +38,14 @@ npm start
 npm test
 ```
 
+## To run and watch tests
+
+```
+npm run test-watch
+```
+
 ## Further Questions, Considerations, and Possible Improvements
 
-- As the functionality has expanded to handle more edge cases and improper formatting, the main input formatting function has become somewhat bloated and needs to be pieced out for readability, which would be a priority given more time to work on this.
+- As the functionality has expanded to handle more edge cases and improper formatting, the main input formatting function has become somewhat bloated and reliant on nested conditionals and could be separated out for readability and cleanliness, which would be a priority given more time to work on this.
 - Investigate best practices around testing typescript files. Should the tests check the .ts files or the transpiled .js files?
 - Investigate best practices around typescript file structure with regards to .ts files and their transpiled .js files being colocated, whether to have git track the transpiled .js files, etc. etc.

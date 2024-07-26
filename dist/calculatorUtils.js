@@ -38,7 +38,7 @@ const formatInputExpression = (inputExpression) => {
                 // If number contains multiple decimal points, prints warning and only evaluates digits before the second decimal point.
                 if (tokenPlaceholder.match(/\./g) &&
                     tokenPlaceholder.match(/\./g).length > 1) {
-                    console.log(`Warning: Operands cannot contain more than one decimal. Only digits before the second decimal point in "${tokenPlaceholder}" will be evaluated`);
+                    console.warn(`Warning: Operands cannot contain more than one decimal. Only digits before the second decimal point in "${tokenPlaceholder}" will be evaluated`);
                 }
                 formattedInput.push(tokenPlaceholder);
                 tokenPlaceholder = '';
@@ -56,7 +56,7 @@ const formatInputExpression = (inputExpression) => {
             // Prints a warning if invalid characters are included in input string
         }
         else if (calculatorData_1.validNonOperatorStrings.indexOf(splitInput[i]) === -1) {
-            console.log(`Warning: "${splitInput[i]}" is not a valid operator or operand. It will be ignored.`);
+            console.warn(`Warning: "${splitInput[i]}" is not a valid operator or operand. It will be ignored.`);
         }
     }
     return formattedInput;
@@ -113,7 +113,7 @@ exports.handleOperand = handleOperand;
 const handleOperator = (operator, stack, previousStack) => {
     // Checks for divide-by-zero error and reverts back to previous stack if encountered
     if (operator === '/' && stack[stack.length - 1] === 0) {
-        console.log('Error: "0" is not a valid divisor. Ignoring previous input expression and restoring previous stack.');
+        console.error('Error: "0" is not a valid divisor. Ignoring previous input expression and restoring previous stack.');
         return previousStack;
     }
     // Checks for minimum number of operands in stack required by operator

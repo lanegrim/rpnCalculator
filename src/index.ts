@@ -29,6 +29,22 @@ const promptForInitialInput = (): void => {
 	rl.prompt()
 }
 
+const provideHelpText = (): void => {
+	console.log(
+		'To calculate, enter an expression using integers, floats, and valid operators.'
+	)
+	console.log('Valid operators:')
+	console.log(' addition: "+"')
+	console.log(' subtraction: "-"')
+	console.log(' multiplication: "*" or "x"')
+	console.log(' division: "/"')
+	console.log(
+		'Operands will be processed as a stack, in first-in/last-out order'
+	)
+	console.log('Ex: "3 4 1 + *" will be evaluated as: "3 * (4+1)"')
+	console.log('Enter q or ctl+c to exit')
+}
+
 /**
  *
  * @param userInput - input string passed from CLI via readline interface
@@ -64,19 +80,7 @@ export const handleInput = (userInput: string): number[] => {
 
 	// On 'h' input, prints help text
 	if (standardizedInput === 'h') {
-		console.log(
-			'To calculate, enter an expression using integers, floats, and valid operators.'
-		)
-		console.log('Valid operators:')
-		console.log(' addition: "+"')
-		console.log(' subtraction: "-"')
-		console.log(' multiplication: "*" or "x"')
-		console.log(' division: "/"')
-		console.log(
-			'Operands will be processed as a stack, in first-in/last-out order'
-		)
-		console.log('Ex: "3 4 1 + *" will be evaluated as: "3 * (4+1)"')
-		console.log('Enter q or ctl+c to exit')
+		provideHelpText()
 	}
 
 	const tokens = formatInputExpression(standardizedInput)
